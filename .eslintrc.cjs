@@ -20,5 +20,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 }

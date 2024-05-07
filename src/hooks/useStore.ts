@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { type State, type Action, Language, FromLang } from '../type';
+import { type State, type Action, type Language, type FromLang } from '../type';
 import { AUTO_LANGUAGE } from '../constants';
 
 //1 step create a initial state
@@ -21,24 +21,41 @@ function reducer (state: State, action :Action){
     if ( type === 'INTERCHANGE_LANGUAGES'){
       if(state.fromLanguage === AUTO_LANGUAGE ) return state
 
+      const loading = state.fromText !== ''
+
       return {
         ...state,
+        loading,
+        result: '',
         fromLanguage: state.toLanguage,
         toLanguage: state.fromLanguage
       }
     }
   
     if(type === 'SET_FROM_LANGUAGE'){
+      //si el idioma de origen es igual al idioma de destino no hace nada
+      if(state.fromLanguage === action.payload) return state
+      //carga cuando el estado de texto no esta vacio
+      const loading = state.fromText !== '' 
       return {
         ...state,
-        fromLanguage: action.payload
+        fromLanguage: action.payload,
+        result: '',
+        loading
       }
     }
   
     if(type === 'SET_TO_LANGUAGE'){
+
+    if(state.toLanguage === action.payload) return state
+    const loading = state.fromText !== '' 
+
       return {
         ...state,
-        toLanguage: action.payload
+        toLanguage: action.payload,
+        result: '',
+        loading
+
       }
     }
   
